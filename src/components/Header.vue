@@ -2,23 +2,40 @@
   <div class="header" v-if="showNavigation">
     <span><img src="../icons/logo.png" alt="Logo of site/company" /></span>
 
-    <SearchBox @onSetLocation="setLocation()" />
+    <SearchBox
+      @setLocation="setLocation()"
+      @setGuests="setGuests"
+      @search="search"
+    />
   </div>
   <div></div>
 </template>
 
 <script setup lang="ts">
 import SearchBox from "./SearchBox.vue";
+import { computed, ref } from "vue";
 
-const showNavigation = true;
+let showNavigation = true;
+let changeLocation = false;
+let changeGuests = false;
 
 const ChooseLocation = (showNavigation: boolean) => {
   showNavigation = false;
 };
 
 const setLocation = () => {
-  console.log("Hello world");
+  changeLocation = true;
 };
+
+const setGuests = () => {
+  changeGuests = true;
+};
+
+const search = () => {};
+
+const checkNavigation = computed(() => {
+  if ()
+});
 </script>
 
 <style scoped>
