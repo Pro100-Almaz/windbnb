@@ -21,8 +21,8 @@ const searchData = myStore();
 
 const emit = defineEmits(["setLocation", "setGuests", "search"]);
 
-function onSetLocation() {
-  emit("setLocation");
+function onSetLocation(event: any) {
+  emit("setLocation", event);
 }
 
 function onSetGuest() {

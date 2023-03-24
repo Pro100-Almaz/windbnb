@@ -3,38 +3,46 @@
     <span><img src="../icons/logo.png" alt="Logo of site/company" /></span>
 
     <SearchBox
-      @setLocation="setLocation()"
+      @setLocation="setLocation"
       @setGuests="setGuests"
       @search="search"
     />
   </div>
-  <div></div>
+  <div v-else class="modal-window">
+    <ModalNavBar />
+    <div class="free-space" @click="ChooseLocation"></div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import SearchBox from "./SearchBox.vue";
+import ModalNavBar from "./ModalNavBar.vue";
 import { computed, ref } from "vue";
 
-let showNavigation = true;
+let showNavigation = ref(true);
 let changeLocation = false;
 let changeGuests = false;
 
-const ChooseLocation = (showNavigation: boolean) => {
-  showNavigation = false;
+const ChooseLocation = () => {
+  showNavigation.value = !showNavigation.value;
 };
 
 const setLocation = () => {
+  showNavigation.value = !showNavigation.value;
   changeLocation = true;
 };
 
 const setGuests = () => {
+  showNavigation.value = !showNavigation.value;
   changeGuests = true;
 };
 
-const search = () => {};
-
+const search = () => {
+  showNavigation.value = !showNavigation.value;
+};
 const checkNavigation = computed(() => {
-  if ()
+  if (changeLocation) return true;
+  return false;
 });
 </script>
 
@@ -44,5 +52,20 @@ const checkNavigation = computed(() => {
 
   display: flex;
   justify-content: space-between;
+}
+
+.modal-window {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(79, 79, 79, 0.4);
+}
+
+.free-space {
+  width: 100%;
+  height: 100%;
 }
 </style>
