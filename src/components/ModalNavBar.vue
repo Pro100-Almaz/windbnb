@@ -7,7 +7,7 @@
         @click="clickField1"
       >
         <p class="input-type">location</p>
-        <p class="input-text">asdfasdfa</p>
+        <p class="input-text">{{ searchData.location }}</p>
       </div>
       <div class="guest" :class="{ 'p-hover': isActiveG }" @click="clickField2">
         <p class="input-type">guests</p>
@@ -20,33 +20,42 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { computed } from "vue";
+import { myStore } from "@/store/store";
 
-// let isActive = false;
+const searchData = myStore();
+let isActiveG = false;
+let isActiveL = false;
 
-// const clickField = computed(() => {
-//   isActive = !isActive;
-// });
-
-export default {
-  data() {
-    return {
-      isActiveL: false,
-      isActiveG: false,
-    };
-  },
-  methods: {
-    clickField1() {
-      this.isActiveL = true;
-      this.isActiveG = false;
-    },
-    clickField2() {
-      this.isActiveG = true;
-      this.isActiveL = false;
-    },
-  },
+const clickField1 = () => {
+  isActiveL = true;
+  isActiveG = false;
 };
+
+const clickField2 = () => {
+  isActiveG = true;
+  isActiveL = false;
+};
+
+// export default {
+//   data() {
+//     return {
+//       isActiveL: false,
+//       isActiveG: false,
+//     };
+//   },
+//   methods: {
+//     clickField1() {
+//       this.isActiveL = true;
+//       this.isActiveG = false;
+//     },
+//     clickField2() {
+//       this.isActiveG = true;
+//       this.isActiveL = false;
+//     },
+//   },
+// };
 </script>
 
 <style scoped>

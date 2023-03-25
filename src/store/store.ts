@@ -9,7 +9,7 @@ export interface SearchData {
 export const myStore = defineStore({
   id: "searchData",
   state: (): SearchData => ({
-    location: "Location is picked",
+    location: "Pick location",
     adultCount: 0,
     childCount: 0,
   }),
