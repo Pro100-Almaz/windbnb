@@ -51,7 +51,9 @@ export default {
 
 <style scoped>
 .outer-box {
-  z-index: 1;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
   background-color: var(--color-background);
   height: 460px;
   padding: 6rem 6rem 0 6rem;

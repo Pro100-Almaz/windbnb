@@ -12,11 +12,15 @@
     <ModalNavBar />
     <div class="free-space" @click="ChooseLocation"></div>
   </div>
+  <div>
+    <Rooms />
+  </div>
 </template>
 
 <script setup lang="ts">
 import SearchBox from "./SearchBox.vue";
 import ModalNavBar from "./ModalNavBar.vue";
+import Rooms from "./Rooms.vue";
 import { computed, ref } from "vue";
 
 let showNavigation = ref(true);
@@ -62,6 +66,7 @@ const checkNavigation = computed(() => {
   height: 100%;
   overflow: auto;
   background-color: rgba(79, 79, 79, 0.4);
+  z-index: 1;
 }
 
 .free-space {
