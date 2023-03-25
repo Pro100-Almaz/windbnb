@@ -12,25 +12,25 @@ export interface RoomDataType {
   photo: string;
 }
 
+export interface DataStore {
+  myData: RoomDataType[];
+}
+
 export const useMyDataStore = defineStore({
   id: "myDataStore",
-  state: () => ({
-    myData: {} as RoomDataType,
+  state: (): DataStore => ({
+    myData: [],
   }),
   actions: {
     async fetchMyData() {
       try {
-        const response = await fetch("../stays.json");
-        console.log(response);
+        const response = await fetch("stays.json");
         const data = await response.json();
-        console.log(data);
         this.myData = data;
       } catch (error) {
         console.error(error);
       }
     },
   },
-  getters: {
-    myData: (state) => state.myData,
-  },
+  getters: {},
 });

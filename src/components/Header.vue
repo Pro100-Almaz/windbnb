@@ -56,6 +56,8 @@ const checkNavigation = computed(() => {
 
   display: flex;
   justify-content: space-between;
+
+  margin-bottom: 4rem;
 }
 
 .modal-window {

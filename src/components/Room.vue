@@ -1,9 +1,9 @@
 <template>
   <div class="one-room">
-    <img v-if="img != null" src="{{ img }}" alt="image of room" />
+    <img v-if="imageLink != null" :src="imageLink" alt="image of room" />
     <img v-else src="../icons/logo.png" alt="image of note found room" />
     <div class="room-info">
-      <span :class="superHost"></span>
+      <span :class="superHost">Super host</span>
     </div>
   </div>
 </template>
@@ -12,7 +12,7 @@
 export default {
   name: "Room",
   props: {
-    img: {
+    imageLink: {
       type: String,
       default: null,
     },
@@ -44,6 +44,7 @@ export default {
     superHost() {
       return {
         "p-host": this.super,
+        "p-empty": !this.super,
       };
     },
   },
@@ -59,8 +60,8 @@ export default {
 .p-host {
   border: 1px solid #4f4f4f;
   border-radius: 12px;
-  margin: auto;
   justify-content: center;
+  padding: 0.3rem 0.5rem;
 
   font-family: "Montserrat";
   font-style: normal;
@@ -70,5 +71,9 @@ export default {
   text-transform: uppercase;
 
   color: #4f4f4f;
+}
+
+.p-empty {
+  display: none;
 }
 </style>
