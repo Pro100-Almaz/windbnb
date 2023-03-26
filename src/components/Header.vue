@@ -9,7 +9,7 @@
     />
   </div>
   <div v-else class="modal-window">
-    <ModalNavBar />
+    <ModalNavBar @search="search" />
     <div class="free-space" @click="ChooseLocation"></div>
   </div>
   <div>
@@ -42,7 +42,7 @@ const setGuests = () => {
 };
 
 const search = () => {
-  showNavigation.value = !showNavigation.value;
+  showNavigation.value = true;
 };
 const checkNavigation = computed(() => {
   if (changeLocation) return true;

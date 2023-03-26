@@ -4,6 +4,7 @@
     <img v-else src="../icons/logo.png" alt="image of note found room" />
     <div class="room-info">
       <span :class="superHost">Super host</span>
+      <span></span>
     </div>
   </div>
 </template>
@@ -36,6 +37,10 @@ export default {
       type: Number,
       default: 0,
     },
+    show: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     defineData() {
@@ -52,6 +57,9 @@ export default {
 </script>
 
 <style scoped>
+.one-room {
+  margin-bottom: 1rem;
+}
 .one-room img {
   width: 395px;
   height: 269px;

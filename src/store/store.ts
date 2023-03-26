@@ -17,6 +17,10 @@ export const myStore = defineStore({
     checkData(): boolean {
       return this.adultCount + this.childCount !== 0;
     },
+
+    getCount(): number {
+      return this.adultCount + this.childCount;
+    },
   },
   actions: {},
 });

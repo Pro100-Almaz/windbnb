@@ -4,61 +4,119 @@
       <div
         class="location"
         :class="{ 'p-hover': isActiveL }"
-        @click="clickField1"
+        @click="clickField1()"
       >
         <p class="input-type">location</p>
         <p class="input-text">{{ searchData.location }}</p>
       </div>
-      <div class="guest" :class="{ 'p-hover': isActiveG }" @click="clickField2">
+      <div
+        class="guest"
+        :class="{ 'p-hover': isActiveG }"
+        @click="clickField2()"
+      >
         <p class="input-type">guests</p>
-        <p class="input-text">asdfasdfa</p>
+        <p class="input-text">
+          {{ searchData.adultCount + searchData.childCount }}
+        </p>
       </div>
       <div class="search-btn">
-        <button><span class="material-icons">search</span> Search</button>
+        <button @click="onSearch">
+          <span class="material-icons">search</span>
+          Search
+        </button>
+      </div>
+      <div>
+        <div v-for="city in cities" v-if="isActiveL" class="city-btn">
+          <p>
+            <span class="material-icons" style="margin-right: 10px"
+              >location_on</span
+            >
+            <span class="city-name" @click="selectCity(city)">{{ city }}</span>
+          </p>
+        </div>
+      </div>
+      <div v-if="isActiveG">
+        <div class="counter">
+          <p class="name">Adult</p>
+          <p class="description">Ages 13 or above</p>
+          <div class="counter-btn">
+            <div class="plus" @click="subtractCounterAdult">
+              <div style="margin: 0 auto">-</div>
+            </div>
+            <div class="count">{{ searchData.adultCount }}</div>
+            <div class="plus" @click="addCounterAdult">
+              <div style="margin: 0 auto">+</div>
+            </div>
+          </div>
+        </div>
+        <div class="counter">
+          <p class="name">Children</p>
+          <p class="description">Ages 2-12</p>
+          <div class="counter-btn">
+            <div
+              class="plus"
+              @click="if (searchData.childCount > 0) searchData.childCount--;"
+            >
+              <div style="margin: 0 auto">-</div>
+            </div>
+            <div class="count">{{ searchData.childCount }}</div>
+            <div class="plus" @click="searchData.childCount++">
+              <div style="margin: 0 auto">+</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { myStore } from "@/store/store";
 
 const searchData = myStore();
-let isActiveG = false;
-let isActiveL = false;
+let isActiveG = ref(false);
+let isActiveL = ref(false);
+
+const emit = defineEmits(["search"]);
+
+const cities = [
+  "Helsinki, Finland",
+  "Turku, Finland",
+  "Oulu, Finland",
+  "Vaasa, Finland",
+];
+
+function onSearch() {
+  emit("search");
+}
 
 const clickField1 = () => {
-  isActiveL = true;
-  isActiveG = false;
+  isActiveL.value = true;
+  isActiveG.value = false;
 };
 
 const clickField2 = () => {
-  isActiveG = true;
-  isActiveL = false;
+  isActiveG.value = true;
+  isActiveL.value = false;
 };
 
-// export default {
-//   data() {
-//     return {
-//       isActiveL: false,
-//       isActiveG: false,
-//     };
-//   },
-//   methods: {
-//     clickField1() {
-//       this.isActiveL = true;
-//       this.isActiveG = false;
-//     },
-//     clickField2() {
-//       this.isActiveG = true;
-//       this.isActiveL = false;
-//     },
-//   },
-// };
+const selectCity = (name: string) => {
+  searchData.location = name;
+  isActiveG.value = true;
+  isActiveL.value = false;
+};
+
+const subtractCounterAdult = () => {
+  if (searchData.adultCount > 0) searchData.adultCount--;
+};
+
+const addCounterAdult = () => {
+  searchData.adultCount++;
+};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .outer-box {
   position: fixed;
   width: 100%;
@@ -73,7 +131,7 @@ const clickField2 = () => {
   height: 55px;
 
   display: grid;
-  grid-template-columns: repeat(3, 33%);
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
 
   font-family: "Mulish", sans-serif;
@@ -162,5 +220,62 @@ const clickField2 = () => {
 .search-btn button:active {
   background-color: #fc6a6a;
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.city-name {
+  font-family: "Muli";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  color: #4f4f4f;
+}
+
+.city-btn {
+  cursor: pointer;
+
+  font-family: "Mulish";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+
+  color: #4f4f4f;
+
+  margin-top: 2rem;
+}
+
+.counter {
+  margin-top: 18px;
+  font-family: "Mulish", sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  margin-left: 27px;
+  margin-bottom: 3rem;
+  .name {
+    font-weight: 700;
+    color: #333333;
+  }
+  .description {
+    color: #bdbdbd;
+    margin-bottom: 12px;
+  }
+  .counter-btn {
+    display: flex;
+    align-items: center;
+    .count {
+      margin: 0 15px;
+      color: black;
+    }
+    .plus {
+      display: flex;
+      align-items: center;
+      height: 23px;
+      width: 23px;
+      border: 1px solid #828282;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
 }
 </style>

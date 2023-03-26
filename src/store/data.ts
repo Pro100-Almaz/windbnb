@@ -1,3 +1,4 @@
+import { myStore } from "./store";
 import { defineStore } from "pinia";
 
 export interface RoomDataType {

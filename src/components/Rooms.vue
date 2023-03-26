@@ -3,27 +3,37 @@
     <span class="header-text">Stays in Finland</span>
     <span class="statistics">12+ stays</span>
   </div>
-
-  <div v-for="room in roomData.myData" class="rooms">
-    <Room
-      :imageLink="room.photo"
-      :super="room.superHost"
-      :rating="room.rating"
-      :title="room.title"
-      :type="room.type"
-    />
+  <div class="rooms">
+    <div v-for="room in roomData.myData">
+      <Room
+        v-if="room.city == cityName"
+        :imageLink="room.photo"
+        :super="room.superHost"
+        :rating="room.rating"
+        :title="room.title"
+        :type="room.type"
+        :show="room.city == cityName"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useMyDataStore } from "@/store/data";
-import { onMounted } from "vue";
+import { myStore } from "@/store/store";
+import { onMounted, ref, computed } from "vue";
 import Room from "./Room.vue";
 
 const roomData = useMyDataStore();
+const searchData = myStore();
+
+const cityList = ref(new Array());
+
+const cityName = searchData.location.split(",")[0];
+console.log(cityName);
+
 onMounted(async () => {
   await roomData.fetchMyData();
-  console.log(roomData.myData[1].city);
 });
 </script>
 
@@ -55,8 +65,9 @@ onMounted(async () => {
 }
 
 .rooms {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: space-between;
+  padding: 0 2rem;
 }
 </style>
