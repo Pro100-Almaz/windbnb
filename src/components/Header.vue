@@ -18,14 +18,20 @@
 </template>
 
 <script setup lang="ts">
+import { useMyDataStore } from "@/store/data";
+import { myStore } from "@/store/store";
 import SearchBox from "./SearchBox.vue";
 import ModalNavBar from "./ModalNavBar.vue";
 import Rooms from "./Rooms.vue";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 
 let showNavigation = ref(true);
 let changeLocation = false;
 let changeGuests = false;
+const roomData = useMyDataStore();
+const searchData = myStore();
+
+const cityName = searchData.location.split(", ")[0];
 
 const ChooseLocation = () => {
   showNavigation.value = !showNavigation.value;
@@ -43,6 +49,11 @@ const setGuests = () => {
 
 const search = () => {
   showNavigation.value = true;
+
+  roomData.getSortedData(
+    cityName,
+    searchData.adultCount + searchData.childCount
+  );
 };
 const checkNavigation = computed(() => {
   if (changeLocation) return true;

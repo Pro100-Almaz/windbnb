@@ -4,8 +4,14 @@
     <img v-else src="../icons/logo.png" alt="image of note found room" />
     <div class="room-info">
       <span :class="superHost">Super host</span>
-      <span></span>
+      <div class="light-text">
+        <span>{{ type }}.</span> <span>{{ beds }}</span>
+      </div>
+      <div class="rating">
+        <span class="material-icons">star</span><span>{{ rating }}</span>
+      </div>
     </div>
+    <p class="title">{{ title }}</p>
   </div>
 </template>
 
@@ -37,10 +43,6 @@ export default {
       type: Number,
       default: 0,
     },
-    show: {
-      type: Boolean,
-      default: true,
-    },
   },
   computed: {
     defineData() {
@@ -56,14 +58,26 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .one-room {
   margin-bottom: 1rem;
+  max-width: 395px;
+  .title {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+
+    color: #333333;
+    margin-bottom: 1rem;
+  }
 }
 .one-room img {
   width: 395px;
   height: 269px;
   border-radius: 24px;
+  cursor: pointer;
 }
 .p-host {
   border: 1px solid #4f4f4f;
@@ -83,5 +97,22 @@ export default {
 
 .p-empty {
   display: none;
+}
+
+.room-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+  .light-text {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #828282;
+  }
 }
 </style>

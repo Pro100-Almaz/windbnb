@@ -4,15 +4,14 @@
     <span class="statistics">12+ stays</span>
   </div>
   <div class="rooms">
-    <div v-for="room in roomData.myData">
+    <div v-for="room in roomData.filteredData">
       <Room
-        v-if="room.city == cityName"
         :imageLink="room.photo"
         :super="room.superHost"
         :rating="room.rating"
         :title="room.title"
         :type="room.type"
-        :show="room.city == cityName"
+        :beds="room.beds"
       />
     </div>
   </div>
@@ -27,10 +26,7 @@ import Room from "./Room.vue";
 const roomData = useMyDataStore();
 const searchData = myStore();
 
-const cityList = ref(new Array());
-
-const cityName = searchData.location.split(",")[0];
-console.log(cityName);
+const cityName = searchData.location.split(", ")[0];
 
 onMounted(async () => {
   await roomData.fetchMyData();
