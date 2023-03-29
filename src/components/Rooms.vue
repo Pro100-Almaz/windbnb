@@ -6,9 +6,21 @@
   <div class="rooms">
     <div
       v-for="room in roomData.myData"
-      :class="`display-room ${room.city !== cityName}`"
+      v-if="searchData.location == 'Pick location'"
     >
-      <p>here we go</p>
+      <Room
+        :imageLink="room.photo"
+        :super="room.superHost"
+        :rating="room.rating"
+        :title="room.title"
+        :type="room.type"
+        :beds="room.beds"
+      />
+    </div>
+    <div
+      v-for="room in roomData.myData"
+      :class="`${room.city !== cityName && 'display-room'}`"
+    >
       <Room
         :imageLink="room.photo"
         :super="room.superHost"
@@ -30,13 +42,11 @@ import Room from "./Room.vue";
 const roomData = useMyDataStore();
 const searchData = myStore();
 
-const cityName = searchData.location.split(", ")[0] || false;
+const cityName = computed(() => searchData.location.split(", ")[0]);
 
 onMounted(async () => {
   await roomData.fetchMyData();
 });
-
-console.log(roomData.myData[0]);
 </script>
 
 <style scoped>
