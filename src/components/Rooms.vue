@@ -4,7 +4,11 @@
     <span class="statistics">12+ stays</span>
   </div>
   <div class="rooms">
-    <div v-for="room in roomData.filteredData">
+    <div
+      v-for="room in roomData.myData"
+      :class="`display-room ${room.city !== cityName}`"
+    >
+      <p>here we go</p>
       <Room
         :imageLink="room.photo"
         :super="room.superHost"
@@ -26,11 +30,13 @@ import Room from "./Room.vue";
 const roomData = useMyDataStore();
 const searchData = myStore();
 
-const cityName = searchData.location.split(", ")[0];
+const cityName = searchData.location.split(", ")[0] || false;
 
 onMounted(async () => {
   await roomData.fetchMyData();
 });
+
+console.log(roomData.myData[0]);
 </script>
 
 <style scoped>
@@ -65,5 +71,9 @@ onMounted(async () => {
   grid-template-columns: repeat(3, 1fr);
   justify-content: space-between;
   padding: 0 2rem;
+}
+
+.display-room {
+  display: none;
 }
 </style>

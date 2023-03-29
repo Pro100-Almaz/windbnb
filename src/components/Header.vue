@@ -49,11 +49,6 @@ const setGuests = () => {
 
 const search = () => {
   showNavigation.value = true;
-
-  roomData.getSortedData(
-    cityName,
-    searchData.adultCount + searchData.childCount
-  );
 };
 const checkNavigation = computed(() => {
   if (changeLocation) return true;
