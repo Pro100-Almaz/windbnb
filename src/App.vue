@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import Header from "./components/Header.vue";
-window.Telegram.WebApp.ready();
-Telegram.WebApp.sendData(JSON.stringify(data));
 </script>
 
 <template>
